@@ -54,3 +54,22 @@ def train_kernel_ridge(x_train, y_train, kwidth, llambda):
     alphas = sp.dot(inv(K + llambda * np.eye(np.shape(K)[0])),
                     Y_train.transpose())
     return alphas
+
+a = train_kernel_ridge(X_train, Y_train, 1, 1)
+print(a)
+
+
+def apply_kernel_ridge(alphas, x_train, x_test, kwidth):
+    """
+    Applys kernel ridge regression (krr)
+    Input:      alphas      -  NtrxD2 array trained in train_krr
+                x_train     -  DxNtr array of Ntr train data points
+                               with D features
+                x_test      -  DxNte array of Nte test data points
+                               with D features
+                kwidht      -  Kernel width
+    Output:     Y_test      -  D2xNte array
+    """
+    k = gaussian_kernel(x_test, x_train, kwidth)
+    y_test = sp.dot(k, alphas)
+    return y_test.transpose()
