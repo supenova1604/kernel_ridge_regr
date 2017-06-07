@@ -73,3 +73,16 @@ def apply_kernel_ridge(alphas, x_train, x_test, kwidth):
     k = gaussian_kernel(x_test, x_train, kwidth)
     y_test = sp.dot(k, alphas)
     return y_test.transpose()
+
+
+def train_ols(x_train, y_train):
+    """
+    Trains ordinary least squares (ols) regression
+    Input:       X_train  -  DxN array of N data points with D features
+                 Y        -  D2xN array of length N with D2 multiple labels
+    Output:      W        -  DxD2 array, linear mapping used to estimate labels
+                             with sp.dot(W.T, X)
+    """
+    W = solve(sp.dot(x_train, y_train.T),
+              sp.dot(x_train, y_train.T))
+    return W
